@@ -15,7 +15,7 @@ export default function LoginForm() {
         if(logInApiCall.success){
             navigate('/')
         } else {
-             loginData.errorMessage = logInApiCall.sanitizedInputs;
+             loginData.errorMessage = logInApiCall.errors;
              setInputs(loginData);
         }
     }
