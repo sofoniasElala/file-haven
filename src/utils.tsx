@@ -17,8 +17,8 @@ export async function getHomePage(){
         const response = await fetch('http://localhost:3000/', {
             credentials: 'include'
         });
-        const data = await response.json();
-        return data;
+        const jsonData = await response.json();
+        return jsonData.data;
     } catch(error) {
         throw {fetchError: true, error: error}; 
     }
