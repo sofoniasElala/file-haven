@@ -1,10 +1,16 @@
 import { getHomePage } from "../utils"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { FileModel, FolderModel } from "../../types/global";
 import { DateTime } from "luxon";
+import PopUp from "./PopUp";
+import options from '/ellipsis-vertical-solid-2.svg';
+import '../styles/Homepage.css'
+
 
 export default function HomePage(){
     const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string, folders: FolderModel[], files: FileModel[]}>({id: 0, username: '', folders: [], files: [] });
+    const [fileOrFolderId, setFileOrFolderId] = useState<number>(-1);
+    const clickedElementRef = useRef<Element | null>(null); // null is required bc otherwise current will be read only
 
     useEffect(() => {
        async function getFoldersAndFiles(){
@@ -14,6 +20,11 @@ export default function HomePage(){
        }
        getFoldersAndFiles();
     }, [])
+
+    function handleClick(id: number, element: Element){
+        setFileOrFolderId(id);
+        clickedElementRef.current = element;
+    }
 
     return (
         <>
@@ -32,6 +43,7 @@ export default function HomePage(){
                             "MMMM dd, yyyy"
                         )}</div>
                             <div className="size">{"—"}</div>
+                            <img src={options} height='20px' alt="more action" onClick={(event) => handleClick(folder.id, event.currentTarget)} />
                         </div>
                         <hr />
                         </>
@@ -43,12 +55,14 @@ export default function HomePage(){
                         "MMMM dd, yyyy"
                     )}</div>
                         <div className="size">{file.size}</div>
+                        <img src={options} height='20px' alt="more action" onClick={(event) => handleClick(file.id, event.currentTarget)} />
                     </div>
                     <hr />
                     </>
                 })}
             </div>
         </section>
+        <PopUp id={fileOrFolderId} clickedElementRef={clickedElementRef} setFileOrFolderId={setFileOrFolderId} />
         </>
         
     )
