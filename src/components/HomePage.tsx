@@ -9,8 +9,9 @@ import '../styles/Homepage.css'
 
 export default function HomePage(){
     const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string, folders: FolderModel[], files: FileModel[]}>({id: 0, username: '', folders: [], files: [] });
-    const [fileOrFolderId, setFileOrFolderId] = useState<number>(-1);
-    const clickedElementRef = useRef<Element | null>(null); // null is required bc otherwise current will be read only
+    const [fileOrFolder, setFileOrFolder] = useState<{type: string, name: string, id: number}>({type: '', name: '', id: -1});
+    const clickedElementRef = useRef<HTMLImageElement | null>(null); // null is required bc otherwise .current will be read only
+    const [refresh, setRefresh] = useState(false); //toggle state to re-render after renames and deletes
 
     useEffect(() => {
        async function getFoldersAndFiles(){
@@ -19,10 +20,10 @@ export default function HomePage(){
         setFoldersAndFiles(response);
        }
        getFoldersAndFiles();
-    }, [])
+    }, [refresh])
 
-    function handleClick(id: number, element: Element){
-        setFileOrFolderId(id);
+    function handleClick(type: string, name: string, id: number, element: HTMLImageElement){
+        setFileOrFolder({...fileOrFolder, name: name, id: id, type: type });
         clickedElementRef.current = element;
     }
 
@@ -43,7 +44,7 @@ export default function HomePage(){
                             "MMMM dd, yyyy"
                         )}</div>
                             <div className="size">{"—"}</div>
-                            <img src={options} height='20px' alt="more action" onClick={(event) => handleClick(folder.id, event.currentTarget)} />
+                            <img src={options} height='20px' alt="more action" onClick={(event) => handleClick('folder', folder.name, folder.id, event.currentTarget)} />
                         </div>
                         <hr />
                         </>
@@ -55,14 +56,14 @@ export default function HomePage(){
                         "MMMM dd, yyyy"
                     )}</div>
                         <div className="size">{file.size}</div>
-                        <img src={options} height='20px' alt="more action" onClick={(event) => handleClick(file.id, event.currentTarget)} />
+                        <img src={options} height='20px' alt="more action" onClick={(event) => handleClick('file', file.name, file.id, event.currentTarget)} />
                     </div>
                     <hr />
                     </>
                 })}
             </div>
         </section>
-        <PopUp id={fileOrFolderId} clickedElementRef={clickedElementRef} setFileOrFolderId={setFileOrFolderId} />
+        <PopUp setRefresh={setRefresh} fileOrFolder={fileOrFolder} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
         </>
         
     )
