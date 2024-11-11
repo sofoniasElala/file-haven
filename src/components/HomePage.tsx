@@ -18,7 +18,6 @@ export default function HomePage(){
     useEffect(() => {
        async function getFoldersAndFiles(){
         const response = await getHomePage();
-        console.log(response)
         setFoldersAndFiles(response);
        }
        getFoldersAndFiles();

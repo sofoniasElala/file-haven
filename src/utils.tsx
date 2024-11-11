@@ -131,7 +131,22 @@ export async function downloadFile(name: string){
         })
         const data = response.json();
         return data;
-    }catch(error) {
+    } catch(error) {
+        throw {fetchError: true, error: error}
+    }
+}
+
+export async function createFolder(newFolderData: {name: string}, folderId: number | null){
+    try{
+        const response = await fetch(`http://localhost:3000/folders${folderId ? '/' + folderId : ''}`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json" },
+            credentials: 'include',
+            body: JSON.stringify(newFolderData)
+        })
+        const data = response.json();
+        return data;
+    } catch(error) {
         throw {fetchError: true, error: error}
     }
 }
