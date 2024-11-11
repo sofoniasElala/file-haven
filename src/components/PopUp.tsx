@@ -1,5 +1,7 @@
 import { useRef } from "react";
-import { rename, notificationPopUp, deleteFileOrFolder } from "../utils";
+import { rename, notificationPopUp, deleteFileOrFolder, downloadFile } from "../utils";
+import download from "downloadjs";
+import { decode } from "base64-arraybuffer";
 
 export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder, setRefresh}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, setRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
     const rect = clickedElementRef.current?.getBoundingClientRect();
@@ -10,23 +12,36 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
     const popUpOverlayRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    function handleClick(type: string, dialog: string){
+    async function handleClick(type: string | null, dialog: string | null, downloadClick: boolean = false){
         if(type === 'open') {
             popUpRef.current!.style.display = "none";
             popUpOverlayRef.current!.style.display = "none";
         }
-        if(type === 'open' && dialog === 'rename') {
-        RenameDialogRef.current!.showModal();
-        inputRef.current?.select();
-        } else if(type === 'close' && dialog === 'rename') {
-            RenameDialogRef.current!.close();
-            setFileOrFolder({...fileOrFolder, id: -1});
-        }
-        if(type === 'open' && dialog === 'delete'){
-            deleteDialogRef.current!.showModal();
-        } else if(type === 'close' && dialog === 'delete') {
-            deleteDialogRef.current!.close();
-            setFileOrFolder({...fileOrFolder, id: -1});
+        if(downloadClick){
+            const downloadApiCall = downloadFile(fileOrFolder.name);
+            const apiResponse = await notificationPopUp(
+                downloadApiCall,
+                { pending: `Preparing file...`, success: `Download should start soon.`},
+              3000
+            );
+            const fileBlob = new Blob([decode(apiResponse.base64File)], {type: apiResponse.type})
+             
+            download(fileBlob, fileOrFolder.name);
+    
+        } else {
+            if(type === 'open' && dialog === 'rename') {
+            RenameDialogRef.current!.showModal();
+            inputRef.current?.select();
+            } else if(type === 'close' && dialog === 'rename') {
+                RenameDialogRef.current!.close();
+                setFileOrFolder({...fileOrFolder, id: -1});
+            }
+            if(type === 'open' && dialog === 'delete'){
+                deleteDialogRef.current!.showModal();
+            } else if(type === 'close' && dialog === 'delete') {
+                deleteDialogRef.current!.close();
+                setFileOrFolder({...fileOrFolder, id: -1});
+            }
         }
     }
 
@@ -35,7 +50,8 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
         let deleteApiCall;
         if(type === 'rename') {
         const updateData: any = {
-            name: updateFormData.get("re-name")
+            name: updateFormData.get("re-name"),
+            originalName: fileOrFolder.name
         };
          updateApiCall = rename(updateData, fileOrFolder);
          handleClick('close', 'rename');
@@ -72,17 +88,17 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
             handleSubmission(new FormData(e.currentTarget), 'rename');
             }}>
                 <label htmlFor="re-name">{"Rename"}</label>
-                <input ref={inputRef} autoCapitalize="on" id="re-name" name="re-name" type="text" defaultValue={fileOrFolder.name} />
+                <input key={fileOrFolder.id} ref={inputRef} autoCapitalize="on" id="re-name" name="re-name" type="text" defaultValue={fileOrFolder.name} />
                 <div className="buttons">
                     <button onClick={() => handleClick('close', 'rename')} type="button" >{"Cancel"}</button>
                     <button type="submit">{"OK"}</button>
                 </div>
             </form>
         </dialog>
-        <div id="overlay" ref={popUpOverlayRef} className="overlay" style={{display: fileOrFolder.id < 0 ? "none" : "block"}} onClick={() => setFileOrFolder({...fileOrFolder, id: -1})}></div>
-            <div className="pop-up" ref={popUpRef} style={{ display: fileOrFolder.id < 0 ? "none" : "block", top: `${top! + 90}px` }}>
+        <div key={fileOrFolder.id} id="overlay" ref={popUpOverlayRef} className="overlay" style={{display: fileOrFolder.id < 0 ? "none" : "block"}} onClick={() => setFileOrFolder({...fileOrFolder, id: -1})}></div>
+            <div key={fileOrFolder.id + 1} className="pop-up" ref={popUpRef} style={{ display: fileOrFolder.id < 0 ? "none" : "block", top: `${top! + 90}px` }}>
                 <div className="rename" onClick={() => handleClick('open', 'rename')}>{"Rename"}</div>
-                <div className="download">{"Download"}</div>
+                {fileOrFolder.type === 'file' && <div className="download" onClick={() => handleClick('open', null, true)}>{"Download"}</div>}
                 <div className="delete" onClick={() => handleClick('open', 'delete')} >{"Delete"}</div>
         </div>
         </>

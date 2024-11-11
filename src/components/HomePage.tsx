@@ -1,5 +1,6 @@
 import { getHomePage } from "../utils"
 import { useEffect, useState, useRef } from "react"
+import { useOutletContext } from "react-router-dom";
 import { FileModel, FolderModel } from "../../types/global";
 import { DateTime } from "luxon";
 import PopUp from "./PopUp";
@@ -12,6 +13,7 @@ export default function HomePage(){
     const [fileOrFolder, setFileOrFolder] = useState<{type: string, name: string, id: number}>({type: '', name: '', id: -1});
     const clickedElementRef = useRef<HTMLImageElement | null>(null); // null is required bc otherwise .current will be read only
     const [refresh, setRefresh] = useState(false); //toggle state to re-render after renames and deletes
+    const parentRefresh = useOutletContext();
 
     useEffect(() => {
        async function getFoldersAndFiles(){
@@ -20,7 +22,7 @@ export default function HomePage(){
         setFoldersAndFiles(response);
        }
        getFoldersAndFiles();
-    }, [refresh])
+    }, [refresh, parentRefresh])
 
     function handleClick(type: string, name: string, id: number, element: HTMLImageElement){
         setFileOrFolder({...fileOrFolder, name: name, id: id, type: type });
