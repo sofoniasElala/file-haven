@@ -1,0 +1,47 @@
+/* Overlay styling */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    z-index: 999; /* Ensures it stays above the rest of the content */
+  }
+  
+  /* Popup styling */
+  .pop-up {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Higher than overlay to stay on top */
+    width: 150px;
+    text-align: center;
+    color: black;
+  }
+
+  .folder, .file, .column-labels {
+    display: flex;
+  }
+  .column-labels {
+    margin-bottom: 10px;
+  }
+  .name-column, .name {
+    width: 450px;
+    text-align: left;
+    padding-left: 10px;
+  }
+  .name {
+    display: flex;
+    gap: 15px;
+  }
+  .name img {
+    padding-top: 2px;
+  }
+  .last-modified-column, .last-modified, .file-size-column, .size {
+    width: 250px;
+    text-align: left;
+  }
+  
