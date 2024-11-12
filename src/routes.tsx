@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm";
 import SignUpFrom from './components/SignUpForm';
 import HomePage from "./components/HomePage";
 import { checkAuthStatus } from "./utils";
+import Folder from "./components/Folder";
 
 const loggedInUserReRouter = async ({ request }: { request: Request }) => { // destructuring with type annotation
     const url = new URL(request.url);  // Creates a URL object from the request
@@ -26,7 +27,11 @@ const routes = [
             {
                 path: "/",
                 element: <HomePage />
-            }
+            },
+            {
+                path: "folders/:folderId",
+                element: <Folder />
+            },
         ]
     },
     {

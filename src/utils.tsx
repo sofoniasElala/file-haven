@@ -150,3 +150,25 @@ export async function createFolder(newFolderData: {name: string}, folderId: numb
         throw {fetchError: true, error: error}
     }
 }
+
+export async function getFolder(folderId: number){
+    try {
+        const response = await fetch(`http://localhost:3000/folders/${folderId}`, {
+            credentials: 'include'
+        })
+        const data = response.json();
+        return data;
+    } catch (error) {
+        throw {fetchError: true, error: error}
+    }
+}
+
+export function formatBytes(bytes: number, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024; // or 1000 for decimal units
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+}
