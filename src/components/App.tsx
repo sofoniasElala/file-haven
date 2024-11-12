@@ -12,11 +12,13 @@ function App() {
       <p onClick={()=> console.log('project name clicked')} >File Haven</p>
       <hr />
     </nav>
-    <aside>
-      <AsideColumn setParentRefresh={setParentRefresh} folderId={folderId}/>
-    </aside>
     <main>
-      <Outlet context={parentRefresh} /> 
+      <aside>
+        <AsideColumn setParentRefresh={setParentRefresh} folderId={folderId}/>
+      </aside>
+      <section className="container">
+        <Outlet context={parentRefresh} /> 
+      </section>
     </main>
     <footer>Copyright © <span id="date"></span> SofoniasElala  <a href="https://github.com/sofoniasElala/file-haven"><i className="fa-brands fa-github" style={{color: "#000000"}}></i></a></footer>
     </>

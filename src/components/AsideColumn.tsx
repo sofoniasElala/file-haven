@@ -1,13 +1,17 @@
-//import { useLocation } from "react-router-dom"
 import { useRef } from "react";
 import { uploadFile, notificationPopUp } from "../utils";
 import CreateFolderDialog from "./CreateFolderDialog";
+import { useNavigate } from "react-router-dom";
+import uploadIcon from '/upload-solid.svg';
+import createIcon from '/plus-solid.svg';
+import houseIcon from '/house-solid.svg';
 
 export default function AsideColumn({folderId, setParentRefresh}: {folderId: React.MutableRefObject<number | null>, setParentRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
     //const path = useLocation().pathname;
    // console.log(path) // '/' for homepage
     const FileInputRef = useRef<HTMLInputElement | null>(null);
     const folderDialogRef = useRef<HTMLDialogElement | null>(null);
+    const navigate = useNavigate();
 
     async function fileSelected(){
         const files = FileInputRef.current?.files;
@@ -31,10 +35,19 @@ export default function AsideColumn({folderId, setParentRefresh}: {folderId: Rea
     return (
         <>
             <input ref={FileInputRef} type="file" name="file" id="file-input" style={{display: "none"}} onChange={fileSelected} accept="image/*,.pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
-            <div className="upload-file" onClick={() => FileInputRef.current?.click()}>{"Upload File"}</div>
+            <div className="upload-file" onClick={() => FileInputRef.current?.click()}>
+                <img src={uploadIcon} height='15px' alt="upload file" />
+                {"Upload File"}
+                </div>
             <CreateFolderDialog folderId={folderId} setParentRefresh={setParentRefresh} folderDialogRef={folderDialogRef} />
-            <div className="create-folder" onClick={() => folderDialogRef.current?.showModal()}>{"Create Folder"}</div>
-            <div className="all-files">{"All Files"}</div>
+            <div className="create-folder" onClick={() => folderDialogRef.current?.showModal()}>
+                <img src={createIcon} height='15px' alt="create folder" />
+                {"Create Folder"}
+                </div>
+            <div className="home" onClick={() => navigate('/')}>
+                <img src={houseIcon} height='15px' alt="home" />
+                {"Home"}
+                </div>
         </>
     )
 }

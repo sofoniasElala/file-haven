@@ -6,6 +6,7 @@ import { decode } from "base64-arraybuffer";
 export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder, setRefresh}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, setRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
     const rect = clickedElementRef.current?.getBoundingClientRect();
     const top = rect?.top;
+    const left = rect?.left;
     const RenameDialogRef = useRef<HTMLDialogElement | null>(null);
     const deleteDialogRef = useRef<HTMLDialogElement | null>(null);
     const popUpRef = useRef<HTMLDivElement | null>(null);
@@ -96,7 +97,7 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
             </form>
         </dialog>
         <div key={fileOrFolder.id} id="overlay" ref={popUpOverlayRef} className="overlay" style={{display: fileOrFolder.id < 0 ? "none" : "block"}} onClick={() => setFileOrFolder({...fileOrFolder, id: -1})}></div>
-            <div key={fileOrFolder.id + 1} className="pop-up" ref={popUpRef} style={{ display: fileOrFolder.id < 0 ? "none" : "block", top: `${top! + 90}px` }}>
+            <div key={fileOrFolder.id + 1} className="pop-up" ref={popUpRef} style={{ display: fileOrFolder.id < 0 ? "none" : "block", top: `${top! + 80}px`, left: `${left! - 50}px` }}>
                 <div className="rename" onClick={() => handleClick('open', 'rename')}>{"Rename"}</div>
                 {fileOrFolder.type === 'file' && <div className="download" onClick={() => handleClick('open', null, true)}>{"Download"}</div>}
                 <div className="delete" onClick={() => handleClick('open', 'delete')} >{"Delete"}</div>
