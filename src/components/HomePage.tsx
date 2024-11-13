@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react"
 import { useOutletContext } from "react-router-dom";
 import { FileModel, FolderModel } from "../../types/global";
 import FileFolderList from "./FileFolderList";
+import sideArrowIcon from '/chevron-right-solid.svg';
 
 
 export default function HomePage(){
@@ -25,7 +26,7 @@ export default function HomePage(){
 
     return (
         <>
-        <p>HOMEPAGE</p>
+        <p className="folder-name">HOME<img className="side-arrow" src={sideArrowIcon} height='15px' alt="arrow" /></p>
         <FileFolderList setRefresh={setRefresh} fileOrFolder={fileOrFolder} foldersAndFiles={foldersAndFiles} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
         </>
         

@@ -23,7 +23,7 @@ export default function CreateFolderDialog({folderIdRef, setParentRefresh, folde
         folderDialogRef.current!.close();
     }
     return (
-        <dialog ref={folderDialogRef}>
+        <dialog className="create-folder-dialog" ref={folderDialogRef}>
             <form onSubmit={(e) => {
             e.preventDefault();
             handleSubmission(new FormData(e.currentTarget));

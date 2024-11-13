@@ -76,10 +76,16 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
             e.preventDefault();
             handleSubmission(new FormData(e.currentTarget), 'delete');
             }}>
-               <p>{"Are you sure you want to delete this?"}</p>
-               <div className="buttons">
-                    <button onClick={() => handleClick('close', 'delete')} type="button">{"No"}</button>
-                    <button type="submit">{"Yes"}</button>
+               <label>{"Are you sure you want to delete this?"}</label>
+               <div className="bottom-half">
+                    <div className="selected">
+                        <div className="selected-name">{'Name: ' +fileOrFolder.name}</div>
+                        <div className="type">{'Type: '+fileOrFolder.type}</div>
+                    </div>
+                    <div className="buttons">
+                            <button onClick={() => handleClick('close', 'delete')} type="button">{"No"}</button>
+                            <button type="submit">{"Yes"}</button>
+                    </div>
                </div>
             </form>
         </dialog>
@@ -99,7 +105,9 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
         <div key={fileOrFolder.id} id="overlay" ref={popUpOverlayRef} className="overlay" style={{display: fileOrFolder.id < 0 ? "none" : "block"}} onClick={() => setFileOrFolder({...fileOrFolder, id: -1})}></div>
             <div key={fileOrFolder.id + 1} className="pop-up" ref={popUpRef} style={{ display: fileOrFolder.id < 0 ? "none" : "block", top: `${top! + 80}px`, left: `${left! - 50}px` }}>
                 <div className="rename" onClick={() => handleClick('open', 'rename')}>{"Rename"}</div>
+                <hr />
                 {fileOrFolder.type === 'file' && <div className="download" onClick={() => handleClick('open', null, true)}>{"Download"}</div>}
+                {fileOrFolder.type === 'file' && <hr/>}
                 <div className="delete" onClick={() => handleClick('open', 'delete')} >{"Delete"}</div>
         </div>
         </>
