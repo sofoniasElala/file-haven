@@ -10,7 +10,7 @@ export default function HomePage(){
     const [fileOrFolder, setFileOrFolder] = useState<{type: string, name: string, id: number}>({type: '', name: '', id: -1});
     const clickedElementRef = useRef<HTMLImageElement | null>(null); // null is required bc otherwise .current will be read only
     const [refresh, setRefresh] = useState(false); //toggle state to re-render after renames and deletes
-    const parentRefresh = useOutletContext();
+    const [folderIdRef, parentRefresh] = useOutletContext<[React.MutableRefObject<Number | null>, boolean]>();
 
     useEffect(() => {
        async function getFoldersAndFiles(){
@@ -18,6 +18,7 @@ export default function HomePage(){
         setFoldersAndFiles(response);
        }
        getFoldersAndFiles();
+       folderIdRef.current = null;
     }, [refresh, parentRefresh])
 
     

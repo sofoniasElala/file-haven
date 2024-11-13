@@ -8,7 +8,8 @@ import wordIcon from '/file-word-solid.svg';
 import { useNavigate } from "react-router-dom";
 import PopUp from "./PopUp";
 import { formatBytes } from "../utils";
-import '../styles/FileFolderList.css'
+import '../styles/FileFolderList.css';
+import { formatDateTime } from "../utils";
 
 export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedElementRef, setFileOrFolder, setRefresh}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, username: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
     const navigate = useNavigate();
@@ -30,16 +31,14 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
                 </div>
                 <hr />
                 <div className="column-data">
-                    {foldersAndFiles.folders && foldersAndFiles.folders.map(folder => {
+                    {foldersAndFiles.folders && foldersAndFiles.folders.map(folder => { 
                         return <>
                                 <div key={folder.id} className="folder" onClick={() => navigate(`folders/${folder.id}`)}>
                                     <div className="name">
                                         <img src={folderIcon} height='20px' alt="folder" />
                                         {folder.name}
                                         </div>
-                                    <div className="last-modified">{DateTime.fromISO(folder.updatedAt).toFormat(
-                                    "MMMM dd, yyyy"
-                                        )}</div>
+                                    <div className="last-modified">{formatDateTime(folder.updatedAt)}</div>
                                     <div className="size">{"—"}</div>
                                     <img src={optionsIcon} height='20px' alt="more action" onClick={(event) => { event.stopPropagation(); handleClick('folder', folder.name, folder.id, event.currentTarget)} }/>
                                 </div>

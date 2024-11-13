@@ -6,9 +6,7 @@ import uploadIcon from '/upload-solid.svg';
 import createIcon from '/plus-solid.svg';
 import houseIcon from '/house-solid.svg';
 
-export default function AsideColumn({folderId, setParentRefresh}: {folderId: React.MutableRefObject<number | null>, setParentRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
-    //const path = useLocation().pathname;
-   // console.log(path) // '/' for homepage
+export default function AsideColumn({folderIdRef, setParentRefresh}: {folderIdRef: React.MutableRefObject<number | null>, setParentRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
     const FileInputRef = useRef<HTMLInputElement | null>(null);
     const folderDialogRef = useRef<HTMLDialogElement | null>(null);
     const navigate = useNavigate();
@@ -18,7 +16,7 @@ export default function AsideColumn({folderId, setParentRefresh}: {folderId: Rea
         if(files && files.length > 0){
             const formData = new FormData();
             formData.append('file', files[0]);
-            formData.append('folder_id', folderId.current === null ? 'null' : String(folderId.current));
+            formData.append('folder_id', folderIdRef.current === null ? 'null' : String(folderIdRef.current));
 
             const uploadFileApiCall = uploadFile(formData);
             const apiResponse = await notificationPopUp(
@@ -39,7 +37,7 @@ export default function AsideColumn({folderId, setParentRefresh}: {folderId: Rea
                 <img src={uploadIcon} height='15px' alt="upload file" />
                 {"Upload File"}
                 </div>
-            <CreateFolderDialog folderId={folderId} setParentRefresh={setParentRefresh} folderDialogRef={folderDialogRef} />
+            <CreateFolderDialog folderIdRef={folderIdRef} setParentRefresh={setParentRefresh} folderDialogRef={folderDialogRef} />
             <div className="create-folder" onClick={() => folderDialogRef.current?.showModal()}>
                 <img src={createIcon} height='15px' alt="create folder" />
                 {"Create Folder"}

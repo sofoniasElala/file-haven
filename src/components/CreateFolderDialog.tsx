@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createFolder, notificationPopUp } from "../utils";
 
-export default function CreateFolderDialog({folderId, setParentRefresh, folderDialogRef}: {folderId: React.MutableRefObject<number | null>, setParentRefresh: React.Dispatch<React.SetStateAction<boolean>>, folderDialogRef: React.MutableRefObject<HTMLDialogElement | null>,}){
+export default function CreateFolderDialog({folderIdRef, setParentRefresh, folderDialogRef}: {folderIdRef: React.MutableRefObject<number | null>, setParentRefresh: React.Dispatch<React.SetStateAction<boolean>>, folderDialogRef: React.MutableRefObject<HTMLDialogElement | null>,}){
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     async function handleSubmission(CreateFolderFormData: FormData){
@@ -11,7 +11,7 @@ export default function CreateFolderDialog({folderId, setParentRefresh, folderDi
         const newFolderData: any = {
             name: CreateFolderFormData.get("folderName")
         };
-        const createFolderApiCall = createFolder(newFolderData, folderId.current);
+        const createFolderApiCall = createFolder(newFolderData, folderIdRef.current);
             const apiResponse = await notificationPopUp(
                 createFolderApiCall,
             { pending: `Creating folder...`, success: `Folder created`},

@@ -1,5 +1,6 @@
 import {CustomFormData} from '../types/global';
 import { toast } from 'react-toastify';
+import { DateTime } from 'luxon';
 export async function checkAuthStatus() {
     try {
       const response = await fetch('http://localhost:3000/auth/status', {// await fetch('https://sofonias-elala-file-haven-api.glitch.me/auth/status', {
@@ -117,7 +118,7 @@ export async function uploadFile(fileData: FormData){
             credentials: 'include',
             body: fileData
         })
-        const data = response.json();
+        const data = await response.json();
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}
@@ -129,7 +130,7 @@ export async function downloadFile(name: string){
         const response = await fetch(`http://localhost:3000/files/${name}/download`, {
             credentials: 'include'
         })
-        const data = response.json();
+        const data = await response.json();
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}
@@ -144,7 +145,7 @@ export async function createFolder(newFolderData: {name: string}, folderId: numb
             credentials: 'include',
             body: JSON.stringify(newFolderData)
         })
-        const data = response.json();
+        const data = await response.json();
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}
@@ -156,8 +157,8 @@ export async function getFolder(folderId: number){
         const response = await fetch(`http://localhost:3000/folders/${folderId}`, {
             credentials: 'include'
         })
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.folder;
     } catch (error) {
         throw {fetchError: true, error: error}
     }
@@ -171,4 +172,14 @@ export function formatBytes(bytes: number, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+}
+
+export function formatDateTime(dateTime: string){
+    const folderDateTime = DateTime.fromISO(dateTime);
+    const now = DateTime.now();
+    if( folderDateTime.day == now.day){
+        return folderDateTime.toFormat("h':'mm a")
+    } else {
+        return folderDateTime.toFormat("MMMM dd, yyyy")
+    }
 }
