@@ -8,10 +8,6 @@ function App() {
   const [parentRefresh, setParentRefresh] = useState(false); //toggle state to re-render after file upload and folder creation
   return (
     <>
-    <nav>
-      <p onClick={()=> console.log('project name clicked')} >File Haven</p>
-      <hr />
-    </nav>
     <main>
       <aside>
         <AsideColumn setParentRefresh={setParentRefresh} folderIdRef={folderIdRef}/>
