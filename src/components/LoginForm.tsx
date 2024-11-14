@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { handleLogin } from "../utils";
+import { handleLogin, notificationPopUp } from "../utils";
 
 export default function LoginForm() { 
     const [inputs, setInputs] = useState<{username: string, password: string, errorMessage?:string}>({username: '', password: ''})
@@ -11,11 +11,17 @@ export default function LoginForm() {
             username: loginFormData.get("username"),
             password: loginFormData.get("password")
           };
-        const logInApiCall = await handleLogin(loginData);
-        if(logInApiCall.success){
+        const logInApiCall = handleLogin(loginData);
+        const response = await notificationPopUp(
+            logInApiCall,
+        { pending: `Logging in...`, success: `Successful log in`},
+        2000
+        );
+        if(response.success){
+           localStorage.setItem('file-haven-username', response.username);
             navigate('/')
         } else {
-             loginData.errorMessage = logInApiCall.errors;
+             response.errorMessage = response.errors;
              setInputs(loginData);
         }
     }

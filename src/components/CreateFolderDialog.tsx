@@ -15,7 +15,7 @@ export default function CreateFolderDialog({folderIdRef, setParentRefresh, folde
             const apiResponse = await notificationPopUp(
                 createFolderApiCall,
             { pending: `Creating folder...`, success: `Folder created`},
-            3000
+            2000
             );
             if(apiResponse.success) setParentRefresh((prev) => !prev); //just switches to opposite boolean to trigger re-render app level
     }

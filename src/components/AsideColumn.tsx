@@ -22,7 +22,7 @@ export default function AsideColumn({folderIdRef, setParentRefresh}: {folderIdRe
             const apiResponse = await notificationPopUp(
                 uploadFileApiCall,
             { pending: `Uploading file...`, success: `File uploaded`},
-            3000
+            2000
             );
             FileInputRef.current!.value = ''; //clear selected file path just in case it does not clear due to selecting same file more than once
 

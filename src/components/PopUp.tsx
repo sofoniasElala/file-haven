@@ -23,7 +23,7 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
             const apiResponse = await notificationPopUp(
                 downloadApiCall,
                 { pending: `Preparing file...`, success: `Download should start soon`},
-              3000
+              2000
             );
             const fileBlob = new Blob([decode(apiResponse.base64File)], {type: apiResponse.type})
              
@@ -64,7 +64,7 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
       const apiResponse = await notificationPopUp(
         updateApiCall ? updateApiCall : deleteApiCall!,
       { pending: `${updateApiCall ?'Renaming' : 'Deleting'} ${fileOrFolder.type}...`, success: `${fileOrFolder.type} ${updateApiCall ? 'renamed.' : 'deleted'}`},
-      3000
+      2000
     );
     if(apiResponse.success) setRefresh((prev) => !prev); //just switches to opposite boolean to trigger re-render
     }
