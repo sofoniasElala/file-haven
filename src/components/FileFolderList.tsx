@@ -30,7 +30,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
                 </div>
                 <hr />
                 {(foldersAndFiles.files.length == 0 && foldersAndFiles.folders.length == 0) ?
-                    <p className="empty-folder">{"Empty folder"}</p> : 
+                    <p className="empty-folder">Empty folder</p> : 
                     <div className="column-data">
                         {foldersAndFiles.folders && foldersAndFiles.folders.map(folder => { 
                             return <>
@@ -40,7 +40,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
                                             {folder.name}
                                             </div>
                                         <div className="last-modified">{formatDateTime(folder.updatedAt)}</div>
-                                        <div className="size">{"—"}</div>
+                                        <div className="size">—</div>
                                         <img src={optionsIcon} height='20px' alt="more action" onClick={(event) => { event.stopPropagation(); handleClick('folder', folder.name, folder.id, event.currentTarget)} }/>
                                     </div>
                                     <hr />
@@ -51,7 +51,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
                                     <div key={file.id} className="file">
                                         <div className="name">
                                             <img src={file.type.includes('image') ? imageIcon : file.type.includes('pdf') ? pdfIcon : wordIcon} height='20px' alt="folder" />
-                                            {file.name}
+                                            <div>{file.name}</div> 
                                             {(file.type.includes('image') || file.type.includes('pdf')) && <a href={`${file.storage_url}`} target="_blank" rel="noopener noreferrer"><img className="tab" src={openIcon} height='15px' alt="new tab" /></a>}
                                             </div>
                                         <div className="last-modified">{formatDateTime(file.updatedAt)}</div>

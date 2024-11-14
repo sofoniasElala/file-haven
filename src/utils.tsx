@@ -41,6 +41,32 @@ export async function handleLogin(loginData: CustomFormData){
     }
 }
 
+export async function logOut(){
+    try{
+        const response = await fetch('http://localhost:3000/logout', {
+            method: 'POST',
+            credentials: 'include'
+        })
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        throw {fetchError: true, error: error}; 
+    }
+}
+
+export async function deleteAccount(){
+    try {
+        const response = await fetch('http://localhost:3000/user/delete', {
+            method: 'POST',
+            credentials: 'include'
+        })
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        throw {fetchError: true, error: error}; 
+    }
+}
+
 export async function signUpForAccount(SignUpData: CustomFormData){
     try {
         const response = await fetch('http://localhost:3000/sign-up', {

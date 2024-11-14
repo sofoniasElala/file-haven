@@ -1,5 +1,5 @@
 /* Overlay styling */
-.overlay {
+.overlay, .account-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
   }
   
   /* Popup styling */
-  .pop-up {
+  .pop-up, .account-pop-up {
     position: fixed;
     transform: translate(-50%, -50%);
     background: white;
@@ -32,21 +32,27 @@
     cursor: pointer;
     background-color: #d3d2d2;
   }
-  .folder + hr, .file + hr {
+  .folder + hr, .file + hr, .bottom-half hr{
     margin: 0px;
   }
   .folder img, .file img {
     padding: 1px 5px;
     border-radius: 5px;
   }
-  .rename-dialog, .delete-dialog, .create-folder-dialog, .pop-up {
+  .rename-dialog, .delete-dialog, .create-folder-dialog, .pop-up, .delete-account-dialog {
     border-radius: 8px;
     background-color: whitesmoke;
     cursor: pointer;
   }
-  .delete-dialog {
-    border-color: #606c38;
+  .delete-account-dialog, .delete-dialog {
+    background-color: #405207;
     cursor:default;
+  }
+  .deletion-warning, .selected {
+    padding: 4px 6px;
+    border-radius: 8px;
+    background-color: #6d0707;
+    color:#dcd1d1;
   }
   .folder img:hover, .file img:hover{
     background-color: #afaeae;
@@ -66,7 +72,7 @@
     overflow: hidden;
   }
 
-  .rename-dialog form, .delete-dialog form, .create-folder-dialog form{
+  .rename-dialog form, .create-folder-dialog form{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -79,6 +85,7 @@
     gap: 10px;
   }
   .selected {
+    text-align:left;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -96,17 +103,15 @@
     outline: none;
     color: black;
   }
-  .rename-dialog form .buttons, .create-folder-dialog form .buttons, .delete-dialog form .buttons {
+  .rename-dialog form .buttons, .create-folder-dialog form .buttons, .delete-dialog form .buttons, .delete-account-dialog .account-buttons{
     display: flex;
     gap: 15px;
     justify-content: end;
   }
-  .rename-dialog form button, .create-folder-dialog form button, .delete-dialog form button {
+  .rename-dialog form button, .create-folder-dialog form button {
     background-color: #606c38;
   }
-  .delete-dialog form button[type="submit"] {
-    background-color: rgb(172, 11, 11);
-  }
+ 
   .rename-dialog label, .create-folder-dialog label{
     font-size: 30px;
     text-align: left;
@@ -128,6 +133,11 @@
   }
   .name a{
     height: 18px;
+  }
+  .name div {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
   }
   .last-modified-column, .last-modified, .file-size-column, .size {
     width: 250px;

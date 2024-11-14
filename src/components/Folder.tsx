@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { FolderModel, FileModel } from "../../types/global";
-import { getFolder } from "../utils";
-import { useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { getFolder, notificationPopUp } from "../utils";
+import { useLocation, useOutletContext, useParams } from "react-router-dom";
 import FileFolderList from "./FileFolderList";
 import sideArrowIcon from '/chevron-right-solid.svg';
 import accountIcon from '/manage_account.svg';
+import AccountPopUp from "./AccountPopUp";
 
 export default function Folder(){
     const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string, folders: FolderModel[], files: FileModel[]}>({id: 0, username: '', folders: [], files: [] });
@@ -14,13 +15,18 @@ export default function Folder(){
     const [folderIdRef, parentRefresh] = useOutletContext<[React.MutableRefObject<Number | null>, boolean]>();
     const {folderId} = useParams();
     const location = useLocation();
-    const navigate = useNavigate();
+    const [open, setOpen] = useState<boolean>(false); //account management pop up
     const prev_folder = location.state.prev_folder;
     const current_folder= location.state.current_folder;
 
     useEffect(() => {
         async function getFoldersAndFiles(){
-         const response = await getFolder(Number(folderId));
+         const getFolderApiCall = getFolder(Number(folderId));
+         const response = await notificationPopUp(
+            getFolderApiCall,
+        { pending: `Loading folder...`, success: `Folder loaded`},
+        2000
+        );
          setFoldersAndFiles(response);
         }
         getFoldersAndFiles();
@@ -30,8 +36,9 @@ export default function Folder(){
     return (
         <>
             <nav>
-                <p className="folder-name">{prev_folder?.name ? <div className="prev" >{prev_folder.name }</div> : 'HOME'}<img className="side-arrow" src={sideArrowIcon} height='15px' alt="arrow" />{current_folder?.name}</p>
-                <img src={accountIcon} height='40px' alt="manage account" />
+                <div className="folder-name">{prev_folder?.name ? <div className="prev" >{prev_folder.name }</div> : 'HOME'}<img className="side-arrow" src={sideArrowIcon} height='15px' alt="arrow" />{current_folder?.name}</div>
+                <img src={accountIcon} height='40px' alt="manage account" onClick={() => setOpen((prev) => !prev)}/>
+                <AccountPopUp open={open} setOpen={setOpen} />
             </nav>
             <FileFolderList setRefresh={setRefresh} fileOrFolder={fileOrFolder} foldersAndFiles={foldersAndFiles} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
         </>

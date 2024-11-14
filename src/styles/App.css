@@ -8,17 +8,32 @@
   height: 100vh;
   text-align: center;
 }
-body {
-  padding: 15px 30px;
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav > img {
+  padding-right: 15px;
+  cursor: pointer;
+}
+.delete-account, .logout {
+  display: flex;
+  gap: 5px;
+  font-size: 16px;
+  padding: 8px 15px;
+  align-items: center;
 }
 
 aside {
   background-color: #606c38;
-  padding: 10px;
+  padding: 17px 17px 17px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   color: white;
+  border-radius: 50px 0px 0px 50px;
 }
 .upload-file, .create-folder, .home {
   display: flex;
@@ -43,34 +58,46 @@ aside {
 .home {
   text-align: start;
 }
+.account-pop-up .account-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.account-pop-up {
+  width: 300px !important;
+  border-radius: 8px;
+}
+.account-overlay {
+  background: rgba(255, 255, 255, 0) !important
+}
 
 
 main {
   background-color: #eeeaea;
   flex: 1;
   display: grid;
+  padding: 15px;
   grid-template-columns: 1fr 5fr;
+  border-radius: 50px;
+  margin: 15px 30px 5px;
 }
 section {
   padding-left: 20px;
 }
+footer {
+  margin: 10px auto;
+  font-weight: 500;
+}
 
 .folder-name {
+  display: flex;
   text-align: left;
   font-size: 20px;
   font-weight: 500;
+  margin: 20px 0px;
+  align-items: center;
 }
 .side-arrow {
   margin: 0px 15px;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -79,10 +106,4 @@ section {
   }
 }
 
-.card {
-  padding: 2em;
-}
 
-.read-the-docs {
-  color: #888;
-}
