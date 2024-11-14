@@ -16,7 +16,7 @@ function App() {
         <Outlet context={[folderIdRef, parentRefresh]} /> 
       </section>
     </main>
-    <footer>Copyright © <span id="date"></span> SofoniasElala  <a href="https://github.com/sofoniasElala/file-haven"><i className="fa-brands fa-github" style={{color: "#000000"}}></i></a></footer>
+    <footer>Copyright © <span id="date"></span> SofoniasElala  <a href="https://github.com/sofoniasElala/file-haven"><i className="fa-brands fa-github" style={{color: "#606c38"}}></i></a></footer>
     </>
   )
 }

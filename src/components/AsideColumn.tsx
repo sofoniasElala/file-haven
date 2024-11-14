@@ -35,16 +35,16 @@ export default function AsideColumn({folderIdRef, setParentRefresh}: {folderIdRe
             <input ref={FileInputRef} type="file" name="file" id="file-input" style={{display: "none"}} onChange={fileSelected} accept="image/*,.pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
             <div className="upload-file" onClick={() => FileInputRef.current?.click()}>
                 <img src={uploadIcon} height='15px' alt="upload file" />
-                {"Upload File"}
+                Upload File
                 </div>
             <CreateFolderDialog folderIdRef={folderIdRef} setParentRefresh={setParentRefresh} folderDialogRef={folderDialogRef} />
             <div className="create-folder" onClick={() => folderDialogRef.current?.showModal()}>
                 <img src={createIcon} height='15px' alt="create folder" />
-                {"Create Folder"}
+                Create Folder
                 </div>
             <div className="home" onClick={() => navigate('/')}>
                 <img src={houseIcon} height='15px' alt="home" />
-                {"Home"}
+                Home
                 </div>
         </>
     )

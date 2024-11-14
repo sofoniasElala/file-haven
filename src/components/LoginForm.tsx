@@ -29,7 +29,7 @@ export default function LoginForm() {
     return (
     <main className="form-main">
       <p id="form-paragraph">
-        {"Log in"}
+        Log in
       </p>
     <form
       id="account"
@@ -39,7 +39,7 @@ export default function LoginForm() {
       }}
     >
       <div className="username">
-        <label htmlFor="username"> {"Username "} </label>
+        <label htmlFor="username">Username</label>
         <input
           type="text"
           name="username"
@@ -49,7 +49,7 @@ export default function LoginForm() {
         />
       </div>
       <div className="password">
-        <label htmlFor="password">{"Password "}</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"

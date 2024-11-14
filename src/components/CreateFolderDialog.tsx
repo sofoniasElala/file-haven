@@ -28,11 +28,11 @@ export default function CreateFolderDialog({folderIdRef, setParentRefresh, folde
             e.preventDefault();
             handleSubmission(new FormData(e.currentTarget));
             }}>
-                <label htmlFor="new-folder">{"New folder"}</label>
+                <label htmlFor="new-folder">New folder</label>
                 <input ref={inputRef} autoCapitalize="on" id="new-folder" name="folderName" type="text"  />
                 <div className="buttons">
-                    <button onClick={handleClose} type="button" >{"Cancel"}</button>
-                    <button type="submit">{"Create"}</button>
+                    <button onClick={handleClose} type="button" >Cancel</button>
+                    <button type="submit">Create</button>
                 </div>
             </form>
         </dialog>
