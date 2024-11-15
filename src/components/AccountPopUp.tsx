@@ -67,7 +67,7 @@ export default function AccountPopUp({open, setOpen}: {open: boolean, setOpen: R
                 </div>
                 <hr />
                 <div className="account-buttons">
-                    <button className="delete-account" disabled={username == 'demo' ? true : false} onClick={() => {deleteDialogRef.current?.showModal(); setConfirmOpen((prev) => !prev);}}><img src={deleteIcon} height='25px' alt="delete account" />Delete account</button>
+                    <button className="delete-account" disabled={username == 'demo' ? true : false} style={{cursor: username == 'demo' ? 'text' : 'pointer'}} onClick={() => {deleteDialogRef.current?.showModal(); setConfirmOpen((prev) => !prev);}}><img src={deleteIcon} height='25px' alt="delete account" />Delete account</button>
                     <button className="logout" onClick={() => handleClick('logout')}><img src={logoutIcon} height='25px' alt="logout" />Log out</button>
                 </div>
             </div>

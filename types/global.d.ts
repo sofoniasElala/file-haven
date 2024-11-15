@@ -4,6 +4,11 @@ export interface CustomFormData {
     passwordConfirmation?: FormDataEntryValue | null;
 }
 
+export interface SortByData {
+    sortByUpdatedAt: string | undefined;
+    sortByName: string | undefined;
+}
+
 export interface FileModel {
     size: string;
     id: number;

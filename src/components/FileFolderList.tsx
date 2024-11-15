@@ -1,19 +1,23 @@
-import { FileModel, FolderModel } from "../../types/global";
+import { FileModel, FolderModel, SortByData } from "../../types/global";
 import optionsIcon from '/ellipsis-vertical-solid-2.svg';
 import folderIcon from '/folder-solid.svg';
 import pdfIcon from '/file-pdf-solid.svg';
 import imageIcon from '/file-image-solid.svg';
 import wordIcon from '/file-word-solid.svg';
 import openIcon from '/arrow-up-right.svg';
+import arrowDownIcon from '/arrow_downward.svg';
+import arrowUpIcon from '/arrow_upward.svg';
 import { useLocation, useNavigate } from "react-router-dom";
 import PopUp from "./PopUp";
 import { formatBytes } from "../utils";
 import '../styles/FileFolderList.css';
 import { formatDateTime } from "../utils";
+import { useState } from "react";
 
-export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedElementRef, setFileOrFolder, setRefresh}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, username: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, clickedElementRef, setFileOrFolder, setRefresh, setSortBy}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, username: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>,  setSortBy: React.Dispatch<React.SetStateAction<SortByData>>, sortBy: SortByData}){
     const navigate = useNavigate();
     const location = useLocation();
+    const [sortDirection, setSortDirection] = useState<{type: 'name' | 'lastModified', direction: 'desc' | 'asc'} | null>(null);
     const prev_folder = location.state?.current_folder || null;
 
     function handleClick(type: string, name: string, id: number, element: HTMLImageElement){
@@ -21,11 +25,39 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
         clickedElementRef.current = element;
     }
 
+    function handleSort(type: 'name' | 'lastModified'){
+        let direction: 'desc' | 'asc';
+        if(sortDirection?.type === type){
+            if(sortDirection.direction === 'asc') direction = 'desc';
+            else direction = 'asc';  
+        } else {
+            direction = sortDirection?.direction || 'desc'
+        }
+        const sort = {
+            type: type,
+            direction: direction
+        }
+        setSortDirection(sort)
+        setSortBy({...sortBy,
+            sortByUpdatedAt: type === 'lastModified' ? direction : undefined,
+            sortByName: type === 'name' ? direction : undefined
+        })
+    }
+
         return (
             <>
                 <div className="column-labels">
-                    <div className="name-column">Name</div>
-                    <div className="last-modified-column">Last modified</div>
+                    <div className="name-column" onClick={() => handleSort('name')}>
+                        Name
+                        { (sortDirection &&  sortDirection.type === 'name') && 
+                        <img src={sortDirection.direction === 'desc' ? arrowDownIcon : arrowUpIcon} height='20px' alt="sort by" />
+                        }
+                        </div>
+                    <div className="last-modified-column" onClick={() => handleSort('lastModified')}>
+                        Last modified
+                        { (sortDirection &&  sortDirection.type === 'lastModified') &&
+                        <img src={ sortDirection.direction === 'desc' ? arrowDownIcon : arrowUpIcon} height='20px' alt="sort by" />}
+                        </div>
                     <div className="file-size-column">File size</div>
                 </div>
                 <hr />

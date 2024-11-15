@@ -8,8 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter(routes)
 createRoot(document.getElementById('root')!).render( 
-  <StrictMode>
+ // <StrictMode>
+  <>
     <ToastContainer position='top-center' transition={Slide} theme='dark'/>
    <RouterProvider router={router}/>
- </StrictMode>,
+  </> 
+ //</StrictMode>,
 )

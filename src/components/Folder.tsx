@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FolderModel, FileModel } from "../../types/global";
+import { FolderModel, FileModel, SortByData } from "../../types/global";
 import { getFolder, notificationPopUp } from "../utils";
 import { useLocation, useOutletContext, useParams } from "react-router-dom";
 import FileFolderList from "./FileFolderList";
@@ -16,12 +16,13 @@ export default function Folder(){
     const {folderId} = useParams();
     const location = useLocation();
     const [open, setOpen] = useState<boolean>(false); //account management pop up
+    const [sortBy, setSortBy] = useState<SortByData>({sortByUpdatedAt: 'desc', sortByName: undefined});
     const prev_folder = location.state.prev_folder;
     const current_folder= location.state.current_folder;
 
     useEffect(() => {
         async function getFoldersAndFiles(){
-         const getFolderApiCall = getFolder(Number(folderId));
+         const getFolderApiCall = getFolder(Number(folderId), sortBy);
          const response = await notificationPopUp(
             getFolderApiCall,
         { pending: `Loading folder...`, success: `Folder loaded`},
@@ -35,14 +36,14 @@ export default function Folder(){
 
      useEffect(()=> { //does not show 'loading folder'... toast on reload/refresh
         async function getFoldersAndFilesOnReload(){
-            const response = await getFolder(Number(folderId));
+            const response = await getFolder(Number(folderId), sortBy);
             setFoldersAndFiles(response);
         }
         if(foldersAndFiles.id > 0) {
             getFoldersAndFilesOnReload();
             folderIdRef.current = Number(folderId);
         }
-     }, [refresh, parentRefresh, folderId])
+     }, [refresh, parentRefresh, folderId, sortBy])
 
     return (
         <>
@@ -51,7 +52,7 @@ export default function Folder(){
                 <img src={accountIcon} height='40px' alt="manage account" onClick={() => setOpen((prev) => !prev)}/>
                 <AccountPopUp open={open} setOpen={setOpen} />
             </nav>
-            <FileFolderList setRefresh={setRefresh} fileOrFolder={fileOrFolder} foldersAndFiles={foldersAndFiles} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
+            <FileFolderList setSortBy={setSortBy} sortBy={sortBy} setRefresh={setRefresh} fileOrFolder={fileOrFolder} foldersAndFiles={foldersAndFiles} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
         </>
         
     )

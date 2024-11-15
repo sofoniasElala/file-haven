@@ -1,4 +1,4 @@
-import {CustomFormData} from '../types/global';
+import {CustomFormData, SortByData} from '../types/global';
 import { toast } from 'react-toastify';
 import { DateTime } from 'luxon';
 export async function checkAuthStatus() {
@@ -14,9 +14,9 @@ export async function checkAuthStatus() {
   }
 
 
-export async function getHomePage(){
+export async function getHomePage(sortByData: SortByData){
     try {
-        const response = await fetch('http://localhost:3000/', {
+        const response = await fetch(`http://localhost:3000/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
             credentials: 'include'
         });
         const jsonData = await response.json();
@@ -180,9 +180,9 @@ export async function createFolder(newFolderData: {name: string}, folderId: numb
     }
 }
 
-export async function getFolder(folderId: number){
+export async function getFolder(folderId: number, sortByData: SortByData){
     try {
-        const response = await fetch(`http://localhost:3000/folders/${folderId}`, {
+        const response = await fetch(`http://localhost:3000/folders/${folderId}/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
             credentials: 'include'
         })
         const data = await response.json();
