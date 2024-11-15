@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { signUpForAccount } from "../utils";
+import { notificationPopUp, signUpForAccount } from "../utils";
 
 export default function SignUpForm() { 
     const [inputs, setInputs] = useState<{username: string, password: string, passwordConfirmation: String, errorMessage?:string}>({username: '', password: '', passwordConfirmation: ''})
@@ -12,11 +12,16 @@ export default function SignUpForm() {
             password: signUpFormData.get("password"),
             passwordConfirmation: signUpFormData.get("passwordConfirmation")
           };
-        const signUpApiCall = await signUpForAccount(signUpData);
-        if(signUpApiCall.success){
+        const signUpApiCall = signUpForAccount(signUpData);
+        const response = await notificationPopUp(
+          signUpApiCall,
+          { pending: `Creating account...`, success: `Account created`},
+          2000
+          );
+        if(response.success){
             navigate('/login')
         } else {
-             signUpData.errorMessage = signUpApiCall.errors;
+             signUpData.errorMessage = response.errors;
              setInputs(signUpData);
         }
     }
@@ -61,7 +66,7 @@ export default function SignUpForm() {
               required
             />
           </div>
-          {inputs && <p className="error">{inputs.errorMessage}</p>}
+          {inputs.username.length > 0 && <p className="error">{inputs.errorMessage}</p>}
           <button type="submit">Sign up</button>
         </form>
         <p>Have an account? <Link to='/login'>Log in</Link></p>

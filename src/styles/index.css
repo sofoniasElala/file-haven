@@ -15,8 +15,47 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #4c5a1f;
   text-decoration: inherit;
+}
+.form-main {
+  padding: 0px 25px;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 25px auto;
+  text-align: start;
+  border-style: dashed;
+  border-color: #4c5a1f;
+}
+
+form#account, form#account > div {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  font-size: 20px;
+}
+
+form#account > div, form#account button {
+  margin: 10px 0px;
+}
+
+#form-paragraph {
+  padding-top: 100px;
+  font-size: 36px;
+  margin: 12px auto;
+}
+
+form#account input {
+  height: 36px;
+  font-size: 20px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  border-color: rgb(24, 13, 13);
+  border-style: solid;
+}
+.error {
+  color: #c1121f;
+  margin: 10px 0px;
 }
 
 body {
@@ -42,15 +81,4 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

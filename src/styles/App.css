@@ -74,11 +74,13 @@ aside {
 main {
   background-color: #eeeaea;
   flex: 1;
-  display: grid;
   padding: 15px;
-  grid-template-columns: 1fr 5fr;
   border-radius: 50px;
   margin: 15px 30px 5px;
+}
+.non-form-main {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
 }
 section {
   padding-left: 20px;

@@ -30,7 +30,18 @@ export default function Folder(){
          setFoldersAndFiles(response);
         }
         getFoldersAndFiles();
-        folderIdRef.current = Number(folderId)
+        folderIdRef.current = Number(folderId);
+     }, [])
+
+     useEffect(()=> { //does not show 'loading folder'... toast on reload/refresh
+        async function getFoldersAndFilesOnReload(){
+            const response = await getFolder(Number(folderId));
+            setFoldersAndFiles(response);
+        }
+        if(foldersAndFiles.id > 0) {
+            getFoldersAndFilesOnReload();
+            folderIdRef.current = Number(folderId);
+        }
      }, [refresh, parentRefresh, folderId])
 
     return (

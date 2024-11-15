@@ -21,7 +21,7 @@ export default function LoginForm() {
            localStorage.setItem('file-haven-username', response.username);
             navigate('/')
         } else {
-             response.errorMessage = response.errors;
+             loginData.errorMessage = response.errors;
              setInputs(loginData);
         }
     }
@@ -58,7 +58,7 @@ export default function LoginForm() {
           required
         />
       </div>
-      {inputs && <p className="error">{inputs.errorMessage}</p>}
+      {inputs.username.length > 0 && <p className="error">{inputs.errorMessage}</p>}
       <button type="submit">Log in</button>
     </form>
     <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>

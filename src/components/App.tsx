@@ -8,7 +8,7 @@ function App() {
   const [parentRefresh, setParentRefresh] = useState(false); //toggle state to re-render after file upload and folder creation
   return (
     <>
-    <main>
+    <main className='non-form-main'>
       <aside>
         <AsideColumn setParentRefresh={setParentRefresh} folderIdRef={folderIdRef}/>
       </aside>

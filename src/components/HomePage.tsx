@@ -27,6 +27,18 @@ export default function HomePage(){
        }
        getFoldersAndFiles();
        folderIdRef.current = null;
+    }, [])
+
+    useEffect(()=> { //does not show 'loading homepage'... toast on reload/refresh
+        async function getFoldersAndFilesOnReload(){
+            const response = await getHomePage();
+            setFoldersAndFiles(response);
+        }
+        if(foldersAndFiles.id > 0) {
+            getFoldersAndFilesOnReload();
+            folderIdRef.current = null;
+        }
+
     }, [refresh, parentRefresh])
 
     

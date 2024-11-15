@@ -29,7 +29,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, clickedEl
                     <div className="file-size-column">File size</div>
                 </div>
                 <hr />
-                {(foldersAndFiles.files.length == 0 && foldersAndFiles.folders.length == 0) ?
+                {((foldersAndFiles.files === undefined && foldersAndFiles.folders === undefined) || foldersAndFiles.files.length == 0 && foldersAndFiles.folders.length == 0) ?
                     <p className="empty-folder">Empty folder</p> : 
                     <div className="column-data">
                         {foldersAndFiles.folders && foldersAndFiles.folders.map(folder => { 

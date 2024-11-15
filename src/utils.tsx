@@ -48,6 +48,7 @@ export async function logOut(){
             credentials: 'include'
         })
         const data = await response.json();
+        localStorage.removeItem('file-haven-username');
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}; 
@@ -117,14 +118,15 @@ export async function notificationPopUp(apiCall: Promise<any>, popUpMessage: {pe
         pending: popUpMessage.pending,
         success: {
           render({data}){
-            if(data && data.success == false) throw new Error(data.message)
+            if(data && data.success == false) throw new Error(data.message || data.errors)
             else if (data.errors) throw new Error()
+            else if(data.status == 'error') throw new Error('status')
             else return popUpMessage.success
           }
         },
         error: {
           render({data}: any){
-            let popUpMessage = data.message;
+            let popUpMessage = data.message == 'status' ? 'Folder by that name already exists' : data.message;
             if(data.error) {
             if(data.error.name === 'TypeError') popUpMessage = 'Network error. check connection and try again.'
             else if(data.error.name === 'AbortError') popUpMessage = 'The request was cancelled.'
