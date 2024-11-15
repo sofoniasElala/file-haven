@@ -13,6 +13,7 @@ import { formatBytes } from "../utils";
 import '../styles/FileFolderList.css';
 import { formatDateTime } from "../utils";
 import { useState } from "react";
+import Tooltip from '@mui/material/Tooltip';
 
 export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, clickedElementRef, setFileOrFolder, setRefresh, setSortBy}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, username: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>,  setSortBy: React.Dispatch<React.SetStateAction<SortByData>>, sortBy: SortByData}){
     const navigate = useNavigate();
@@ -47,14 +48,14 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, c
         return (
             <>
                 <div className="column-labels">
-                    <div className="name-column" onClick={() => handleSort('name')}>
-                        Name
+               <div className="name-column" onClick={() => handleSort('name')}>
+                    <Tooltip title="sort by"><div> Name</div></Tooltip>
                         { (sortDirection &&  sortDirection.type === 'name') && 
                         <img src={sortDirection.direction === 'desc' ? arrowDownIcon : arrowUpIcon} height='20px' alt="sort by" />
                         }
                         </div>
-                    <div className="last-modified-column" onClick={() => handleSort('lastModified')}>
-                        Last modified
+                        <div className="last-modified-column" onClick={() => handleSort('lastModified')}>
+                        <Tooltip title="sort by"><div>Last modified</div></Tooltip>
                         { (sortDirection &&  sortDirection.type === 'lastModified') &&
                         <img src={ sortDirection.direction === 'desc' ? arrowDownIcon : arrowUpIcon} height='20px' alt="sort by" />}
                         </div>
@@ -73,7 +74,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, c
                                             </div>
                                         <div className="last-modified">{formatDateTime(folder.updatedAt)}</div>
                                         <div className="size">—</div>
-                                        <img src={optionsIcon} height='20px' alt="more action" onClick={(event) => { event.stopPropagation(); handleClick('folder', folder.name, folder.id, event.currentTarget)} }/>
+                                        <Tooltip title="options"><img src={optionsIcon} height='20px' alt="more action" onClick={(event) => { event.stopPropagation(); handleClick('folder', folder.name, folder.id, event.currentTarget)} }/></Tooltip>
                                     </div>
                                     <hr />
                                 </>
@@ -84,11 +85,16 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, c
                                         <div className="name">
                                             <img src={file.type.includes('image') ? imageIcon : file.type.includes('pdf') ? pdfIcon : wordIcon} height='20px' alt="folder" />
                                             <div>{file.name}</div> 
-                                            {(file.type.includes('image') || file.type.includes('pdf')) && <a href={`${file.storage_url}`} target="_blank" rel="noopener noreferrer"><img className="tab" src={openIcon} height='15px' alt="new tab" /></a>}
+                                            {(file.type.includes('image') || file.type.includes('pdf')) &&
+                                             <a href={`${file.storage_url}`} target="_blank" rel="noopener noreferrer"> 
+                                             <Tooltip title="open in new tab">
+                                                <img className="tab" src={openIcon} height='15px' alt="new tab" />
+                                             </Tooltip>
+                                             </a>}
                                             </div>
                                         <div className="last-modified">{formatDateTime(file.updatedAt)}</div>
                                         <div className="size">{formatBytes(Number(file.size))}</div>
-                                        <img src={optionsIcon} height='20px' alt="more action" onClick={(event) => handleClick('file', file.name, file.id, event.currentTarget)} />
+                                        <Tooltip title="options"><img src={optionsIcon} height='20px' alt="more action" onClick={(event) => handleClick('file', file.name, file.id, event.currentTarget)} /></Tooltip>
                                     </div>
                                     <hr />
                                 </>

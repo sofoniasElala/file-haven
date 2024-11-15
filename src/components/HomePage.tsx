@@ -6,6 +6,7 @@ import FileFolderList from "./FileFolderList";
 import sideArrowIcon from '/chevron-right-solid.svg';
 import accountIcon from '/manage_account.svg';
 import AccountPopUp from "./AccountPopUp";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function HomePage(){
     const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string, folders: FolderModel[], files: FileModel[]}>({id: 0, username: '', folders: [], files: [] });
@@ -48,7 +49,7 @@ export default function HomePage(){
         <>
         <nav>
             <p className="folder-name">HOME<img className="side-arrow" src={sideArrowIcon} height='15px' alt="arrow" /></p>
-            <img src={accountIcon} height='40px' alt="manage account" onClick={() => setOpen((prev) => !prev)} />
+            <Tooltip title="manage account"><img src={accountIcon} height='40px' alt="manage account" onClick={() => setOpen((prev) => !prev)} /></Tooltip>
             <AccountPopUp open={open} setOpen={setOpen} />
         </nav>
         <FileFolderList  setSortBy={setSortBy} sortBy={sortBy} setRefresh={setRefresh} fileOrFolder={fileOrFolder} foldersAndFiles={foldersAndFiles} clickedElementRef={clickedElementRef} setFileOrFolder={setFileOrFolder} />
