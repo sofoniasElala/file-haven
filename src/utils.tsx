@@ -186,7 +186,7 @@ export async function getFolder(folderId: number, sortByData: SortByData){
             credentials: 'include'
         })
         const data = await response.json();
-        return data.folder;
+        return {...data.folder, parentFolderName: data.parentFolderName};
     } catch (error) {
         throw {fetchError: true, error: error}
     }

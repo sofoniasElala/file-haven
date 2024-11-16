@@ -9,7 +9,7 @@ import AccountPopUp from "./AccountPopUp";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function HomePage(){
-    const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string, folders: FolderModel[], files: FileModel[]}>({id: 0, username: '', folders: [], files: [] });
+    const [foldersAndFiles, setFoldersAndFiles] = useState<{id: number, username: string ,name: string, folders: FolderModel[], files: FileModel[]}>({id: 0, name: '', username: '', folders: [], files: [] });
     const [fileOrFolder, setFileOrFolder] = useState<{type: string, name: string, id: number}>({type: '', name: '', id: -1});
     const clickedElementRef = useRef<HTMLImageElement | null>(null); // null is required bc otherwise .current will be read only
     const [refresh, setRefresh] = useState(false); //toggle state to re-render after renames and deletes

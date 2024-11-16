@@ -7,7 +7,7 @@ import wordIcon from '/file-word-solid.svg';
 import openIcon from '/arrow-up-right.svg';
 import arrowDownIcon from '/arrow_downward.svg';
 import arrowUpIcon from '/arrow_upward.svg';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PopUp from "./PopUp";
 import { formatBytes } from "../utils";
 import '../styles/FileFolderList.css';
@@ -15,11 +15,9 @@ import { formatDateTime } from "../utils";
 import { useState } from "react";
 import Tooltip from '@mui/material/Tooltip';
 
-export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, clickedElementRef, setFileOrFolder, setRefresh, setSortBy}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, username: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>,  setSortBy: React.Dispatch<React.SetStateAction<SortByData>>, sortBy: SortByData}){
+export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, clickedElementRef, setFileOrFolder, setRefresh, setSortBy}: {fileOrFolder: {type: string, name: string, id: number}, clickedElementRef: React.MutableRefObject<Element | null>, setFileOrFolder: React.Dispatch<React.SetStateAction<{type: string, name: string, id: number}>>, foldersAndFiles:{id: number, name: string, folders: FolderModel[], files: FileModel[]}, setRefresh: React.Dispatch<React.SetStateAction<boolean>>,  setSortBy: React.Dispatch<React.SetStateAction<SortByData>>, sortBy: SortByData}){
     const navigate = useNavigate();
-    const location = useLocation();
     const [sortDirection, setSortDirection] = useState<{type: 'name' | 'lastModified', direction: 'desc' | 'asc'} | null>(null);
-    const prev_folder = location.state?.current_folder || null;
 
     function handleClick(type: string, name: string, id: number, element: HTMLImageElement){
         setFileOrFolder({...fileOrFolder, name: name, id: id, type: type });
@@ -67,7 +65,7 @@ export default function FileFolderList({foldersAndFiles, fileOrFolder, sortBy, c
                     <div className="column-data">
                         {foldersAndFiles.folders && foldersAndFiles.folders.map(folder => { 
                             return <>
-                                    <div key={folder.id} className="folder" onClick={() => navigate(`/folders/${folder.id}`, { state: { prev_folder: prev_folder, current_folder: {id: folder.id , name: folder.name } }}) }>
+                                    <div key={folder.id} className="folder" onClick={() => navigate(`/folders/${folder.id}`) }>
                                         <div className="name">
                                             <img src={folderIcon} height='20px' alt="folder" />
                                             {folder.name}
