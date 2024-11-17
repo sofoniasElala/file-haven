@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { DateTime } from 'luxon';
 export async function checkAuthStatus() {
     try {
-      const response = await fetch('http://localhost:3000/auth/status', {// await fetch('https://sofonias-elala-file-haven-api.glitch.me/auth/status', {
+      const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/auth/status', {
         method: 'GET',
         credentials: 'include'
       });
@@ -16,7 +16,7 @@ export async function checkAuthStatus() {
 
 export async function getHomePage(sortByData: SortByData){
     try {
-        const response = await fetch(`http://localhost:3000/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
             credentials: 'include'
         });
         const jsonData = await response.json();
@@ -28,7 +28,7 @@ export async function getHomePage(sortByData: SortByData){
 
 export async function handleLogin(loginData: CustomFormData){
     try {
-        const response = await fetch('http://localhost:3000/log-in', {
+        const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/log-in', {
             method: 'POST',
             headers: {"Content-Type": "application/json" },
             credentials: 'include',
@@ -43,7 +43,7 @@ export async function handleLogin(loginData: CustomFormData){
 
 export async function logOut(){
     try{
-        const response = await fetch('http://localhost:3000/logout', {
+        const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/logout', {
             method: 'POST',
             credentials: 'include'
         })
@@ -57,7 +57,7 @@ export async function logOut(){
 
 export async function deleteAccount(){
     try {
-        const response = await fetch('http://localhost:3000/user/delete', {
+        const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/user/delete', {
             method: 'POST',
             credentials: 'include'
         })
@@ -70,7 +70,7 @@ export async function deleteAccount(){
 
 export async function signUpForAccount(SignUpData: CustomFormData){
     try {
-        const response = await fetch('http://localhost:3000/sign-up', {
+        const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/sign-up', {
             method: 'POST',
             headers: {"Content-Type": "application/json" },
             credentials: 'include',
@@ -85,7 +85,7 @@ export async function signUpForAccount(SignUpData: CustomFormData){
 
 export async function rename(updateData: {name: string, originalName: string}, fileOrFolder: {type: string, id: number}){
     try {
-        const response = await fetch(`http://localhost:3000/${fileOrFolder.type}s/${fileOrFolder.id}`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/${fileOrFolder.type}s/${fileOrFolder.id}`, {
             method: 'PUT',
             headers: {"Content-Type": "application/json" },
             credentials: 'include',
@@ -100,7 +100,7 @@ export async function rename(updateData: {name: string, originalName: string}, f
 
 export async function deleteFileOrFolder(fileOrFolder: {type: string, name:string, id: number}){
     try {
-        const response = await fetch (`http://localhost:3000/${fileOrFolder.type}s/${fileOrFolder.id}`, {
+        const response = await fetch (`https://sofonias-elala-file-haven-api.glitch.me/${fileOrFolder.type}s/${fileOrFolder.id}`, {
             method: 'DELETE',
             headers: {"Content-Type": "application/json" },
             credentials: 'include',
@@ -141,7 +141,7 @@ export async function notificationPopUp(apiCall: Promise<any>, popUpMessage: {pe
 
 export async function uploadFile(fileData: FormData){
     try {
-        const response = await fetch(`http://localhost:3000/files`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/files`, {
             method: 'POST',
             credentials: 'include',
             body: fileData
@@ -155,7 +155,7 @@ export async function uploadFile(fileData: FormData){
 
 export async function downloadFile(name: string){
     try {
-        const response = await fetch(`http://localhost:3000/files/${name}/download`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/files/${name}/download`, {
             credentials: 'include'
         })
         const data = await response.json();
@@ -167,7 +167,7 @@ export async function downloadFile(name: string){
 
 export async function createFolder(newFolderData: {name: string}, folderId: number | null){
     try{
-        const response = await fetch(`http://localhost:3000/folders${folderId ? '/' + folderId : ''}`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/folders${folderId ? '/' + folderId : ''}`, {
             method: 'POST',
             headers: {"Content-Type": "application/json" },
             credentials: 'include',
@@ -182,7 +182,7 @@ export async function createFolder(newFolderData: {name: string}, folderId: numb
 
 export async function getFolder(folderId: number, sortByData: SortByData){
     try {
-        const response = await fetch(`http://localhost:3000/folders/${folderId}/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
+        const response = await fetch(`https://sofonias-elala-file-haven-api.glitch.me/folders/${folderId}/?sortByUpdatedAt=${sortByData.sortByUpdatedAt}&sortByName=${sortByData.sortByName}`, {
             credentials: 'include'
         })
         const data = await response.json();
