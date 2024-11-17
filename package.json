@@ -3,13 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "engines": {
-    "node": ">=16.14.2"
-  },
   "scripts": {
     "dev": "vite",
     "type-check": "tsc --noEmit",
-    "start": "npm run type-check && vite build",
+    "build": "npm run type-check && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
