@@ -7,7 +7,7 @@ import { checkAuthStatus, setUserLocalStorage } from "./utils";
 import Folder from "./components/Folder";
 import { DateTime } from "luxon";
 
-const loggedInUserReRouter = async ({ request }: { request: Request }) => { // destructuring with type annotation
+const loggedInUserReRouter = async ({ request }: { request: Request }) => { 
     const url = new URL(request.url);  // Creates a URL object from the request
     const pathname = url.pathname; 
     const userLocalJSON = localStorage.getItem('file-haven-username');
@@ -20,13 +20,14 @@ const loggedInUserReRouter = async ({ request }: { request: Request }) => { // d
             else return null;
         }
     } else {
-            if (pathname === '/') return redirect("/login");
-            const status = await checkAuthStatus();
-            if(status.loggedIn && (pathname === '/login' || pathname === '/signup')){
-                  return redirect('/');
+            if(pathname === '/login' || pathname === '/signup') {
+                return null;
+            } else {
+                const status = await checkAuthStatus();
+                if (!status.loggedIn && pathname === '/') return redirect("/login");
             }
-        }
-    return null;
+         }
+         return null;
   };
   
 const routes = [
