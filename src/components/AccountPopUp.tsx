@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 
 export default function AccountPopUp({open, setOpen}: {open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
-    const username = localStorage.getItem('file-haven-username');
+    const username = JSON.parse(localStorage.getItem('file-haven-username')!).username;
     const navigate = useNavigate();
     const [confirmOpen, setConfirmOpen] = useState(false);
     const deleteDialogRef = useRef<HTMLDialogElement | null>(null);

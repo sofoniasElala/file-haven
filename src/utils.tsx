@@ -1,6 +1,20 @@
 import {CustomFormData, SortByData} from '../types/global';
 import { toast } from 'react-toastify';
 import { DateTime } from 'luxon';
+
+export function setUserLocalStorage(set: boolean, username = ''){
+    if(set){
+    const weekExpiration = DateTime.now().plus({days: 7});
+    const data = {
+        username: username,
+        expires: weekExpiration
+    }
+    localStorage.setItem('file-haven-username', JSON.stringify(data));
+    } else {
+        localStorage.removeItem('file-haven-username'); 
+    }
+}
+
 export async function checkAuthStatus() {
     try {
       const response = await fetch('https://sofonias-elala-file-haven-api.glitch.me/auth/status', {
@@ -35,6 +49,7 @@ export async function handleLogin(loginData: CustomFormData){
             body: JSON.stringify(loginData)
         });
         const data = await response.json();
+        if(response.status === 200) setUserLocalStorage(true, data.username);
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}; 
@@ -48,7 +63,7 @@ export async function logOut(){
             credentials: 'include'
         })
         const data = await response.json();
-        localStorage.removeItem('file-haven-username');
+        if(response.status === 200) setUserLocalStorage(false);
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}; 
@@ -62,6 +77,7 @@ export async function deleteAccount(){
             credentials: 'include'
         })
         const data = await response.json();
+        if(response.status === 200) setUserLocalStorage(false);
         return data;
     } catch(error) {
         throw {fetchError: true, error: error}; 
@@ -205,7 +221,7 @@ export function formatBytes(bytes: number, decimals = 2) {
 export function formatDateTime(dateTime: string){
     const folderDateTime = DateTime.fromISO(dateTime);
     const now = DateTime.now();
-    if( folderDateTime.day == now.day){
+    if( folderDateTime.day == now.day && folderDateTime.month == now.month && folderDateTime.year == now.year){
         return folderDateTime.toFormat("h':'mm a")
     } else {
         return folderDateTime.toFormat("MMMM dd, yyyy")

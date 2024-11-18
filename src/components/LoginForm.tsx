@@ -18,7 +18,6 @@ export default function LoginForm() {
         2000
         );
         if(response.success){
-           localStorage.setItem('file-haven-username', response.username);
             navigate('/')
         } else {
              loginData.errorMessage = response.errors;
