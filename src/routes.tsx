@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import { checkAuthStatus, setUserLocalStorage } from "./utils";
 import Folder from "./components/Folder";
 import { DateTime } from "luxon";
+import NotFound from "./components/NotFound";
 
 const loggedInUserReRouter = async ({ request }: { request: Request }) => { 
     const url = new URL(request.url);  // Creates a URL object from the request
@@ -56,6 +57,10 @@ const routes = [
         loader: loggedInUserReRouter,
         element: <SignUpFrom />
     },
+    {
+        path: '*',
+        element: <NotFound />,
+    }
 ]
 
 export default routes;
