@@ -28,6 +28,7 @@ export default function PopUp({fileOrFolder, clickedElementRef, setFileOrFolder,
             const fileBlob = new Blob([decode(apiResponse.base64File)], {type: apiResponse.type})
              
             download(fileBlob, fileOrFolder.name);
+            setFileOrFolder({...fileOrFolder, id: -1});
     
         } else {
             if(type === 'open' && dialog === 'rename') {

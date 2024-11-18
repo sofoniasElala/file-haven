@@ -28,6 +28,7 @@ export default function Folder(){
         2000
         );
          setFoldersAndFiles(response);
+         document.title = `${response.name} - File Haven`
         }
         getFoldersAndFiles();
         folderIdRef.current = Number(folderId);
