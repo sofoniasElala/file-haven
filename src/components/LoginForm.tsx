@@ -5,6 +5,7 @@ import { handleLogin, notificationPopUp } from "../utils";
 export default function LoginForm() { 
     const [inputs, setInputs] = useState<{username: string, password: string, errorMessage?:string}>({username: '', password: ''})
     const navigate = useNavigate();
+    document.title = `Log in - File Haven`;
     
     async function handleSubmission(loginFormData: FormData){
         const loginData: any = {

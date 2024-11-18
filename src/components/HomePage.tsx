@@ -16,6 +16,7 @@ export default function HomePage(){
     const [folderIdRef, parentRefresh] = useOutletContext<[React.MutableRefObject<Number | null>, boolean]>();
     const [open, setOpen] = useState<boolean>(false); //account management pop up
     const [sortBy, setSortBy] = useState<SortByData>({sortByUpdatedAt: 'desc', sortByName: undefined});
+    document.title = `Home - File Haven`;
 
     useEffect(() => {
        async function getFoldersAndFiles(){

@@ -5,6 +5,7 @@ import { notificationPopUp, signUpForAccount } from "../utils";
 export default function SignUpForm() { 
     const [inputs, setInputs] = useState<{username: string, password: string, passwordConfirmation: String, errorMessage?:string}>({username: '', password: '', passwordConfirmation: ''})
     const navigate = useNavigate();
+    document.title = `Sign up - File Haven`
     
     async function handleSubmission(signUpFormData: FormData){
         const signUpData: any = {
