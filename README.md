@@ -1,6 +1,6 @@
 # File Haven
 
-- [![Static Badge](https://img.shields.io/badge/Live%20Demo-blue)](https://sofonias-elala-file-haven.xyz) [![Netlify Status](https://api.netlify.com/api/v1/badges/3405e025-816a-4248-8eb2-f368c3cda589/deploy-status)](https://app.netlify.com/sites/sofonias-elala-file-haven/deploys)
+[![Static Badge](https://img.shields.io/badge/Live%20Demo-blue)](https://sofonias-elala-file-haven.xyz) [![Netlify Status](https://api.netlify.com/api/v1/badges/3405e025-816a-4248-8eb2-f368c3cda589/deploy-status)](https://app.netlify.com/sites/sofonias-elala-file-haven/deploys)
 
 ## Description
 #### ***File Haven*** is a full-stack web application where you can securely store, organize, and manage your personal files and folders. All features require you to create an account, ensuring that your data stays private and tied to your account. Once logged in, you can create folders, upload files, download them, and delete any of your stored items. With its user-friendly interface, File Haven makes managing your files simple and secure.
