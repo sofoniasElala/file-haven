@@ -1,6 +1,6 @@
 # File Haven
 
-- [![Static Badge](https://img.shields.io/badge/Live%20Demo-blue)](https://sofonias-elala-file-haven.netlify.app/) Don't use Safari as it does not allow cross domain cookies. my apologies.
+- [![Static Badge](https://img.shields.io/badge/Live%20Demo-blue)](https://sofonias-elala-file-haven.xyz)
 - [![Netlify Status](https://api.netlify.com/api/v1/badges/3405e025-816a-4248-8eb2-f368c3cda589/deploy-status)](https://app.netlify.com/sites/sofonias-elala-file-haven/deploys)
 
 ## Description
