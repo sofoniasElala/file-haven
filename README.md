@@ -14,6 +14,7 @@
  * aria-label for accessability
 
 ## Screenshots
+#### URL has been changed due to safari not allowing cross domain cookies
 ![Homepage](public/file_haven_homepage_screenshot.png) 
 ![rename](public/file_haven_rename_screenshot.png)
 ![download](public/file_haven_download_screenshot.png)
