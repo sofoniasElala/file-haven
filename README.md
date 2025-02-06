@@ -8,7 +8,7 @@
 
 ## Link to ***File Haven API*** repo
  * [![Static Badge](https://img.shields.io/badge/Node%20Rest%20API-green)](https://github.com/sofoniasElala/file-haven-api)
- * [![Static Badge](https://img.shields.io/badge/File%20Haven%20Java%20Rest%20API-darkgreen)](https://github.com/sofoniasElala/file-haven-java-api)
+ * [![Static Badge](https://img.shields.io/badge/Java%20Rest%20API-darkgreen)](https://github.com/sofoniasElala/file-haven-java-api)
 
 ## Potential future features
  * the ability to search for files and folders
